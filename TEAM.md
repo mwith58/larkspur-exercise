@@ -16,4 +16,4 @@ decides in the moment who does what.
 - Danny Lyubenov
 - Gamze Yasayan
 - Yudhistra Bhardwaj
-- Subir Seh
+- Subir Sen
