@@ -8,7 +8,7 @@ Number: 15,968 to 13,135 tokens in per contact on K7PQ2M
 Safety check: TODO the one eval case that proves the agent never does the thing it must not do (evals/cases.json, verdict pasted from the run)
 Next: Make the agent handle abusive customers properly, and make next_available_day answer for the whole party instead of one traveller.
 Still broken: An abusive message (ticket R8KD3F) still gets the same calm, routine resolution with no tone handling at all. next_available_day only checks for a party of one, so a family could be told seats exist that don't.
-Lever: intelligence
+Lever: cost
 
 ## Priya asked
 

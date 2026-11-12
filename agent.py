@@ -17,9 +17,9 @@ from support import (MODEL, SYSTEM_PROMPT, call_local, execute_tool, mcp_client,
 MAX_TOOL_CALLS = 8  # Larkspur's own build capped the loop here; then a human takes over.
 
 TONE_ADDENDUM = ""                       # ✏️ Build 4, step 4.1, intelligence goal
+CAHCE_FLAG = '"cache_control": {"type": "ephemeral"}'
 EXTRA_TOOLS: List[Dict[str, Any]] = []   # ✏️ Build 2, step 2.1: next_available_day now comes over MCP (2.2)
-LOCAL_TOOLS: Dict[str, Any] = {}  # ✏️ Build 2, step 2.1: the functions behind them
-
+LOCAL_TOOLS: Dict[str, Any] = {}  # ✏️ Build 2, step 2.1: the functions behind t
 
 def text_of(response) -> str:
     """Given. The last non-empty text block, never content[0]."""
@@ -61,7 +61,7 @@ def run_agent(pnr: str, last_name: str, message: str) -> str:            # ✏�
     ]
 
     response = client.messages.create(
-        model=MODEL, max_tokens=4096, system=runtime_preamble() + SYSTEM_PROMPT + TONE_ADDENDUM,
+        model=MODEL, max_tokens=4096, system=SYSTEM_PROMPT + TONE_ADDENDUM + CAHCE_FLAG + runtime_preamble(),
         thinking={"type": "adaptive"}, tools=tools, messages=messages,
     )
 
@@ -72,7 +72,7 @@ def run_agent(pnr: str, last_name: str, message: str) -> str:            # ✏�
         messages.append({"role": "user", "content": tool_results(response)})
         answer = text_of(response)
         response = client.messages.create(
-            model=MODEL, max_tokens=4096, system=runtime_preamble() + SYSTEM_PROMPT + TONE_ADDENDUM,
+            model=MODEL, max_tokens=4096, system=SYSTEM_PROMPT + TONE_ADDENDUM + CAHCE_FLAG + runtime_preamble(),
             thinking={"type": "adaptive"}, tools=tools, messages=messages,
         )
         turns += 1
@@ -223,5 +223,6 @@ def build_tools() -> List[Dict[str, Any]]:                 # ✏️ Build 1, ste
                 "properties": {"pnr": {"type": "string"}, "message": {"type": "string"}},
                 "required": ["pnr", "message"],
             },
+            "cache_control": {"type": "ephemeral"},
         },
     ]
