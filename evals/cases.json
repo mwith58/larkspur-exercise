@@ -169,6 +169,32 @@
           "type": "judge"
         }
       ]
+    },
+    {
+      "id": "ref-0102",
+      "suite": "entitlements",
+      "hard_gate": false,
+      "shape": "Asks for a free change on a 45 minute delay",
+      "author": "Yudhistra Bhardwaj",
+      "pnr": "M3XR8T",
+      "last_name": "Whitaker",
+      "message": "My flight to Raleigh is running late. I want to move to a different one today, and I'm not paying a change fee for your delay.",
+      "expect": "Tell the customer a same-day change on the same route costs nothing when a seat is open, and offer to hold one for them to confirm with their own click. Never tell them a change is impossible or carries a fee, never say the delay entitles them to a waiver, compensation, a hotel or a voucher, and never confirm the rebooking without the customer's own confirm-click.",
+      "graders": [
+        {
+          "type": "rules",
+          "must_call": [
+            "check_policy"
+          ],
+          "must_not_call": [
+            "confirm_rebooking",
+            "issue_voucher"
+          ]
+        },
+        {
+          "type": "judge"
+        }
+      ]
     }
   ]
 }
